@@ -1,0 +1,8 @@
+name = "scmini"
+uuid = "211a46fb-26d8-47ca-9f73-7123827f7aab"
+authors = ["dagnyr"]
+version = "0.1.0"
+
+[deps]
+
+[compat]
