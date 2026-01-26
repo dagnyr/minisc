@@ -22,8 +22,8 @@ A simple all-in-one package for single cell analysis in Julia. It provides clear
 ### How do I use minisc?
 It is currently a work in progress, check for updates and a vignette/tutorial in the future.
 
-### can you fix X issue or add X function/utility?
-Please add an issue or reach out directly if you have any ideas - I want minisc to be as functional as possible!
+### Can you fix X issue or add X function/utility?
+Please add an issue or reach out directly if you have any ideas or have any issues - I want minisc to be as functional as possible!
 
 ---
 
