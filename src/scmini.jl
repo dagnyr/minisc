@@ -10,6 +10,8 @@ using DataFrames
 
 # rows = genes
 # cols = cells
+#
+# current issue: decide if matrix will have gene names or if I will use indices for every function and cross reference gene names vector
 
 
 function gunzip_file(gz_path::AbstractString)
@@ -145,7 +147,62 @@ function find_variable_genes(gene_counts::AbstractMatrix, no_variable_genes::Int
 
 end
 
-function scale_data()
+# scales genes by variance and stdev
+function scale_counts(log_counts::AbstractMatrix, genes = nothing)
+
+    no_genes = size(log_counts, 1)
+    no_cells = size(log_counts, 2)
+
+    scaled_counts = zeros(Float64, no_genes, no_cells) # initialize matrix
+
+    if genes === nothing
+        genes_to_scale = 1:no_genes
+    else
+        genes_to_scale = genes
+    end
+
+    for g in genes_to_scale
+
+        mu = mean(log_counts[g, :])
+        stdev = std(log_counts[g, :])
+
+        for c in 1:no_cells
+
+            if stdev == 0.0
+                scaled_counts[g, c] = 0.0
+
+            else
+                scaled_counts[g, c] = (log_counts[g, c] - mu) / stdev
+
+            end
+
+        end
+
+    end
+
+    return scaled_counts
+
+end
+
+# combined function to normalize and scale simply
+function normalize_and_scale(gene_counts::AbstractMatrix, scaling_factor::Int64 = 10000, scale_variable_only = true)
+
+    normalized_counts = normalize(gene_counts)
+    logged_counts = log1p_transform(normalized_counts)
+
+    variable_genes, = find_variable_genes(logged_counts)
+
+    if scale_variable_only == true
+
+        scaled_counts = scale_counts(logged_counts, genes = variable_genes)
+
+    else
+
+        scaled_counts = scale_counts(logged_counts, genes = nothing)
+
+    end
+
+    return scaled_counts
 
 end
 
