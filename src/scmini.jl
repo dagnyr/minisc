@@ -67,7 +67,7 @@ function filter_cells()
 
     # filter min count per cell
     # min number of features/genes
-    # max number of features (if mentioned)
+    # max number of features (if mentioned
     # max percent mito
 
 end
